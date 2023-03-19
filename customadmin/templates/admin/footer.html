@@ -1,0 +1,220 @@
+{% extends 'admin/base_admin.html' %}
+{% load static %}
+{% block title %} Admin Dashboard {% endblock %}
+
+{% block style %}
+    <style type="text/css">
+        #popupbox {
+            position: relative;
+            z-index: 9;
+            display: none;
+        }
+        select {
+            width: 186px;
+            height: 100%;
+        }
+        #id_moto{
+            width: 100%;
+        }
+        #image-clear_id{
+            width: auto;
+            margin-left: 90px;
+        }
+        .alert {
+            padding: 20px;
+            background-color: #F3F2EE;
+            color: rgb(0, 0, 0);
+        }
+    
+        .closebtn {
+            margin-left: 15px;
+            color: black;
+            font-weight: bold;
+            float: right;
+            font-size: 22px;
+            line-height: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+    
+        .closebtn:hover {
+            color: black;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Dashboard</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active">Dashboard v1</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="form w-75 mx-auto" id="popupbox">
+    {% for field in form %}
+        {% for error in field.errors %}
+            <div class="alert" style="background-color: red; color: #F3F2EE;">
+                <span class="closebtn" onclick="this.parentElement.style.visibility='hidden';">&times;</span>
+                {{field.name}}{{ error|escape }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+    <div class="card card-warning">
+        <div class="card-header">
+            <h3 class="card-title">Add Footer</h3>
+
+            <button type="button" class="close d-flex justify-row-reverse"
+                aria-label="Close">
+                <span aria-hidden="true"><a href="javascript:login('hide');">&times;</a></span>
+            </button>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body">
+            <form  action="?id={{id}}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-sm">
+                            <div class="form-group">
+                                <label>{{form.logo.label}}</label>
+                                <br>{{form.logo}}
+                            </div>
+                    </div>
+                    <div class="col-sm">
+                        <!-- text input -->
+                            <div class="form-group">
+                                <label>{{form.widgets.label}}</label>
+                                <br>{{form.widgets}}
+                            </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>{{form.payment_partners.label}}</label>
+                                <br>{{form.payment_partners}}
+                            </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <!-- text input -->
+                            <div class="form-group">
+                                <label>{{form.news_letter.label}}</label>
+                                <br>{{form.news_letter}}
+                            </div>
+                    </div>
+                </div>
+                
+                    <div class="col-sm">
+                            <div class="form-group">
+                                <label>{{form.moto.label}}</label>
+                                <br>{{form.moto}}
+                            </div>
+                    </div>
+                    <div class="col-sm">
+                        <!-- text input -->
+                            <div class="form-group">
+                                <label>{{form.footer_text.label}}</label>
+                                <br>{{form.footer_text}}
+                            </div>
+                    </div>
+                
+                <div class="row">
+                    <div class="col-sm-6">
+                        <!-- textarea -->
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!-- /.card-body -->
+    </div>
+</div>
+<section class="content">
+    <div class="container-fluid">
+        <div class="card-header">
+            <h3 class="card-title">Footer Data</h3>
+
+            <div class="card-tools">
+                <div class="form-group d-inline-flex m-auto">
+                    <button type="button" class="btn btn-sm btn-primary"
+                        onclick="javascript:login('show');">Add Footer</button>
+                </div>
+                <div class="input-group input-group-sm d-inline-flex"
+                    style="width: 150px;">
+                    <input type="text" name="table_search"
+                        class="form-control float-right" placeholder="Search">
+
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-default">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-body p-0">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th style="width: 10px">#</th>
+                        <th>Logo</th>
+                        <th>Moto</th>
+                        <th>Widgets</th>
+                        <th>Payment Partners</th>
+                        <th>News Letter Widget</th>
+                        <th>Text</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                    {% for object in objects %}
+                        <tr data-widget="expandable-table" aria-expanded="false">
+                            <td>{{forloop.counter}}</td>
+                            <td><img height="50px" width="100px" src="/media/{{object.logo.logo}}" ></td>
+                            <td>{{object.moto}}</td>
+                            <td>{% for widget in object.widgets.all %} {{widget}} | {% endfor %}</td>
+                            <td>{% for partner in object.payment_partners.all %} <a href="{{partner.url}}" ><img src="/media/{{partner.partner}}" ></a> {% endfor %}</td>
+                            <td>{{object.news_letter}}</td>
+                            <td>{% autoescape off %}
+                                {{ object.footer_text|safe }}
+                                {% endautoescape %}</td>
+                            <td><a href="?id={{object.id}}&&func=edit" class="btn btn-sm btn-warning"><i class="fa fa-edit" ></i></a>
+                                <a href="?id={{object.id}}&&func=delete" class="btn btn-sm btn-danger"><i class="fa fa-trash" ></i></a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script language="JavaScript" type="text/javascript">
+        function login(showhide) {
+            if (showhide == "show") {
+                document.getElementById('popupbox').style.display = "block";
+            } else if (showhide == "hide") {
+                document.getElementById('popupbox').style.display = "none";
+            }
+        }
+    </script>
+</section>
+{% endblock %}
+
+{% block javascript %}
+<script>
+    $('document').ready(function(){
+        CKEDITOR.replace( 'id_footer_text' );
+        
+    });
+</script>
+{% endblock %}

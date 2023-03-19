@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Sign In {% endblock %}
+
+{% block content %}
+
+<!-- Map Begin -->
+<!-- Map End -->
+<link href="{%  static 'css/custom.css' %}" type="text/css" >
+<style>
+    .alert {
+        padding: 20px;
+        background-color: #F3F2EE;
+        color: rgb(0, 0, 0);
+    }
+    
+    .closebtn {
+        margin-left: 15px;
+        color: black;
+        font-weight: bold;
+        float: right;
+        font-size: 22px;
+        line-height: 20px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+    
+    .closebtn:hover {
+        color: black;
+    }
+</style>
+<!-- Contact Section Begin -->
+<section class="contact spad">
+    <div class="container w-50">
+        {% for message in messages %}
+        <div class="alert w-50 mx-auto" style="background-color: red; color: #F3F2EE;">
+            <span class="closebtn" onclick="this.parentElement.style.visibility='hidden';">&times;</span>
+            {{message}}&nbsp;<span><a href="/login" >Login?</a></span>
+        </div>
+        {% endfor %}
+        
+        <div class="contact__form w-50 mx-auto">
+            <form action="" method="post">
+                {% csrf_token %}
+
+                <label for="username" >Username</label>
+                <input type="text" id="username" placeholder="Username" name="username">
+
+                <label for="password" >Password</label>
+                <input type="text" id="password" placeholder="Password" name="password">
+
+
+                <div class="mx-auto">New here?&nbsp;<a href="/register">Register now</a></div><br>
+
+
+                <button type="submit" class="site-btn h-10">Login</button>
+
+
+            </form>
+        </div>
+    </div>
+</section>
+<!-- Contact Section End -->
+
+{% endblock %}

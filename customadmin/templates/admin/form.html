@@ -1,0 +1,366 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+
+    <link rel="stylesheet" href="https://adminlte.io/themes/v3/plugins/fontawesome-free/css/all.min.css">
+
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+
+    <link rel="stylesheet"
+        href="https://adminlte.io/themes/v3/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+
+    <link rel="stylesheet" href="https://adminlte.io/themes/v3/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+
+    <link rel="stylesheet" href="https://adminlte.io/themes/v3/plugins/jqvmap/jqvmap.min.css">
+
+    <link rel="stylesheet" href="https://adminlte.io/themes/v3/dist/css/adminlte.min.css?v=3.2.0">
+
+    <link rel="stylesheet" href="https://adminlte.io/themes/v3/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+
+    <link rel="stylesheet" href="https://adminlte.io/themes/v3/plugins/daterangepicker/daterangepicker.css">
+
+    <link rel="stylesheet" href="https://adminlte.io/themes/v3/plugins/summernote/summernote-bs4.min.css">
+
+    <style type="text/css">
+    #popupbox {
+        position: relative;
+        z-index: 9;
+        display: none;
+    }
+    </style>
+</head>
+
+<body class="hold-transition sidebar-mini layout-fixed">
+    <div class="wrapper">
+
+       
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+	<!-- Content Header (Page header) -->
+	<div class="content-header">
+		<div class="container-fluid">
+			<div class="row mb-2">
+				<div class="col-sm-6">
+					<h1 class="m-0">Product Management</h1>
+				</div>
+				<!-- /.col -->
+				<div class="col-sm-6">
+					<ol class="breadcrumb float-sm-right">
+						<li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
+						<li class="breadcrumb-item active">Products</li>
+					</ol>
+				</div>
+				<!-- /.col -->
+			</div>
+			<!-- /.row -->
+		</div>
+		<!-- /.container-fluid -->
+	</div>
+	<!-- /.content-header -->
+	<div class="form w-50 mx-auto" id="popupbox">
+		<div class="card card-warning">
+			<div class="card-header">
+				<h3 class="card-title">Add Products</h3>
+
+				<button type="button" class="close d-flex justify-row-reverse"
+					aria-label="Close">
+					<span aria-hidden="true"><a href="javascript:login('hide');">&times;</a></span>
+				</button>
+			</div>
+			<!-- /.card-header -->
+			<div class="card-body">
+				<form enctype="multipart/form-data" action="/myadmin/products/add" method="post">
+					<div class="row">
+						<div class="col-sm-6">
+							<!-- text input -->
+
+							
+								<div class="form-group">
+									<label>Name</label>
+									<input type="text"  class="form-control"
+										placeholder="Name" autofocus="true" />
+									<input type = "hidden"  class="form-control" placeholder="Name"
+										autofocus="true" />
+									
+								</div>
+					
+
+						</div>
+
+						<div class="col-sm-6">
+							<!-- text input -->
+							
+								<div class="form-group">
+									<label>Price</label>
+									<input type="text" class="form-control"
+										placeholder="Price" autofocus="true" />
+									
+								</div>
+					
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6">
+							<!-- text input -->
+							
+								<div class="form-group">
+									<label>Sales Price</label>
+									<input type="text"  class="form-control"
+										placeholder="Sales Price" disabled="true" />
+			
+								</div>
+			
+						</div>
+
+						<div class="col-sm-6">
+							<!-- text input -->
+							
+								<div class="form-group">
+									<label>Discount</label>
+									<input type="text"  class="form-control"
+										placeholder="Discount" autofocus="true" />
+						
+								</div>
+						
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6">
+							<!-- text input -->
+							
+								<div class="form-group">
+									<label>In Stock</label>
+									<input type="text" class="form-control"
+										placeholder="In Stock" autofocus="true" />
+			
+								</div>
+						
+						</div>
+
+						<div class="col-sm-6">
+							<!-- text input -->
+							<div class="form-group">
+								<label>Image</label> <input type="file" name="images"
+									accept="image/png, image/jpg, image/jpeg" class="my-1"
+									placeholder="Enter ...">
+							</div>
+						</div>
+					</div>
+
+
+					<!-- input states -->
+
+					<div class="row">
+						<div class="col-sm-6">
+							<!-- select -->
+						
+								<div class="form-group">
+									<label>Select Category</label>
+									<select type="text" 
+										class="form-control" placeholder="Category" autofocus="true" />
+									
+								</div>
+						
+						</div>
+						<div class="col-sm-6">
+							<!-- select -->
+						
+								<div class="form-group">
+									<label>Select Type</label>
+									<select
+										type="text" class="form-control"
+										placeholder="Type" autofocus="true" />
+									
+								</div>
+					
+						</div>
+
+					</div>
+
+					<div class="row">
+						<div class="col-sm-12">
+							<!-- text input -->
+							
+								<div class="form-group">
+									<label>Short Description</label>
+									<input type="text" class="form-control"
+										placeholder="Short Description" autofocus="true" />
+								
+								</div>
+						
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-sm-12">
+							<!-- textarea -->
+							
+								<div class="form-group">
+									<label>Description</label>
+									<textarea type="text" class="form-control"
+										placeholder="Description" autofocus="true" ></textarea>
+								
+								</div>
+						
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-sm-6">
+							<!-- textarea -->
+							<div class="form-group">
+								<button type="submit" class="btn btn-primary">Submit</button>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+			<!-- /.card-body -->
+		</div>
+	</div>
+	<!-- Main content -->
+	<div class="row m-3">
+		<div class="col-12">
+			<div class="card">
+				<div class="card-header">
+					<h3 class="card-title">Product Data</h3>
+
+					<div class="card-tools">
+						<div class="form-group d-inline-flex m-auto">
+							<button type="button" class="btn btn-sm btn-primary"
+								onclick="javascript:login('show');">Add Products</button>
+						</div>
+						<div class="input-group input-group-sm d-inline-flex"
+							style="width: 150px;">
+							<input type="text" name="table_search"
+								class="form-control float-right" placeholder="Search">
+
+							<div class="input-group-append">
+								<button type="submit" class="btn btn-default">
+									<i class="fas fa-search"></i>
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- /.card-header -->
+				<div class="card-body table-responsive p-0">
+					<table class="table table-hover text-wrap">
+						<thead>
+							<tr>
+								<th>ID</th>
+								<th>Name</th>
+								<th>Price</th>
+								<th>Sales Price</th>
+								<th>Discount</th>
+								<th>In Stock</th>
+								<th>Image</th>
+								<th>Category</th>
+								<th>Type</th>
+								<th>Short Description</th>
+								<th>Description</th>
+								<th>Action</th>
+							</tr>
+						</thead>
+						<tbody>
+
+							{% for i in y %}
+								<tr>
+									<td>${i.id }</td>
+									<td>${i.name }</td>
+									<td>${i.price }</td>
+									<td>${i.salePrice }</td>
+									<td>${i.discount }</td>
+									<td>${i.inStock }</td>
+									<td>${i.images }</td>
+									<td>${i.category.name }</td>
+									<td>${i.type.name }</td>
+									<td>${i.shortdes }</td>
+									<td>${i.des }</td>
+									<td><a class="btn btn-sm btn-danger" href="product/delete?id="><i class="fa fa-trash" ></i></a>&nbsp;
+									<a class="btn btn-sm btn-warning" href="product/edit?id="><i class="fa fa-edit" ></i></a></td>
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+				<!-- /.card-body -->
+			</div>
+			<!-- /.card -->
+		</div>
+	</div>
+	<!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+<footer class="main-footer">
+    <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong>
+    All rights reserved.
+    <div class="float-right d-none d-sm-inline-block">
+        <b>Version</b> 3.2.0
+    </div>
+</footer>
+
+<aside class="control-sidebar control-sidebar-dark">
+
+</aside>
+
+</div>
+
+
+<script src="https://adminlte.io/themes/v3/plugins/jquery/jquery.min.js"></script>
+
+<script src="https://adminlte.io/themes/v3/plugins/jquery-ui/jquery-ui.min.js"></script>
+
+<script>
+$.widget.bridge('uibutton', $.ui.button)
+
+</script>
+
+
+<script language="JavaScript" type="text/javascript">
+	function login(showhide) {
+		if (showhide == "show") {
+			document.getElementById('popupbox').style.display = "block";
+		} else if (showhide == "hide") {
+			document.getElementById('popupbox').style.display = "none";
+		}
+	}
+</script>
+
+<script src="https://adminlte.io/themes/v3/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<script src="https://adminlte.io/themes/v3/plugins/chart.js/Chart.min.js"></script>
+
+<script src="https://adminlte.io/themes/v3/plugins/sparklines/sparkline.js"></script>
+
+<script src="https://adminlte.io/themes/v3/plugins/jqvmap/jquery.vmap.min.js"></script>
+<script src="https://adminlte.io/themes/v3/plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
+
+<script src="https://adminlte.io/themes/v3/plugins/jquery-knob/jquery.knob.min.js"></script>
+
+<script src="https://adminlte.io/themes/v3/plugins/moment/moment.min.js"></script>
+<script src="https://adminlte.io/themes/v3/plugins/daterangepicker/daterangepicker.js"></script>
+
+<script src="https://adminlte.io/themes/v3/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+
+<script src="https://adminlte.io/themes/v3/plugins/summernote/summernote-bs4.min.js"></script>
+
+<script src="https://adminlte.io/themes/v3/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+
+<script src="https://adminlte.io/themes/v3/dist/js/adminlte.js?v=3.2.0"></script>
+
+<script src="https://adminlte.io/themes/v3/dist/js/demo.js"></script>
+
+<script src="https://adminlte.io/themes/v3/dist/js/pages/dashboard.js"></script>
+</body>
+
+</html>

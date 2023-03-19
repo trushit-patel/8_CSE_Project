@@ -1,0 +1,59 @@
+{% extends 'admin/base_admin.html' %}
+{% load static %}
+{% block title %} Admin Dashboard {% endblock %}
+
+{% block content %}
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Dashboard</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active">Dashboard v1</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="card-body p-0">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th style="width: 10px">#</th>
+                        <th>Product</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Date</th>
+                        <th>User</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                        {% for cartitem in cartitems %}
+                    <tr data-widget="expandable-table" aria-expanded="false">
+                        <td>{{forloop.counter}}</td>
+                        <td>{{cartitem.product.name}}</td>
+                        <td>{{cartitem.price}}</td>
+                        <td>{{cartitem.quantity}}</td>
+                        <td>{{cartitem.date_added}}</td>
+                        <td>{{cartitem.user.username}}</td>
+                       
+                        <td></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

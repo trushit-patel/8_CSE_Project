@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %} {{policy.title}} {% endblock %}
+{% load static %}
+{% block content %}
+<!-- Header Section End -->
+
+<!-- Breadcrumb Section Begin -->
+<section class="breadcrumb-option">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb__text">
+                    <h4>{{policy.title}}</h4>
+                    <div class="breadcrumb__links">
+                        <a href="./index.html">Home</a>
+                        <span>{{policy.title}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Breadcrumb Section End -->
+
+<!-- About Section Begin -->
+<section class="about spad">
+    <div class="container">
+        <div class="row">
+            <main>
+                <div class="shopify-policy__container">
+
+                    <div class="shopify-policy__body">
+                        <div class="rte">
+                            {% autoescape off %}
+                            {{policy.text | safe}}
+                            {% endautoescape %}
+                        </div>
+                    </div>
+                </div>
+
+            </main>
+        </div>
+    </div>
+</section>
+<!-- About Section End -->
+
+<!-- Footer Section Begin -->
+{% endblock %}

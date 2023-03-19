@@ -1,0 +1,64 @@
+{% extends 'admin/base_admin.html' %}
+{% load static %}
+{% block title %} Admin Dashboard {% endblock %}
+
+{% block content %}
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Dashboard</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active">Dashboard v1</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="card-body p-0">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th style="width: 10px">#</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th>User</th>
+                        <th>Method</th>
+                        <th>Products</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        {% for order in orders %}
+                    <tr data-widget="expandable-table" aria-expanded="false">
+                        <td>{{forloop.counter}}</td>
+                        <td>{{order.date}}</td>
+                        <td><span class="{% if order.payment_status %}
+                                fa fa-check text-success 
+                                {% else %} 
+                                ion-close text-danger 
+                                {% endif %}">
+                            </span>
+                        </td>
+                        <td>{{order.user.username}}</td>
+                        <td>{{order.get_payment_method_display}}</td>
+                        <td>{% for item in order.lineitem_set.all %} <a class="order-products-link" href="{% url 'product_detail' item.product.pk item.product.slug %}">{{item.product.name}}</a> &times; {{item.quantity}}<br> {% endfor %}</td>
+                        <td></td>
+                    </tr>
+                    {% endfor %}
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

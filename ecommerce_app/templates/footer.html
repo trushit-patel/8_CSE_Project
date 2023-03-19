@@ -1,0 +1,59 @@
+{% load static %}
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="footer__about">
+                        <div class="footer__logo">
+                            <a href="{{footer.logo.logo_url}}"><img src="/media/{{footer.logo.logo}}" alt=""></a>
+                        </div>
+                        <p>{{footer.moto}}</p>
+                        {% for payment_partner in footer.payment_partners.all %}
+                        <a href="{{payment_partner.url}}"><img src="/media/{{payment_partner.partner}}" alt=""></a>
+                        {% endfor %}
+                        <!-- the payment partners option -->
+                    </div>
+                </div>
+                {% for widget in footer.widgets.all %}
+                <div class="col-lg-2 {% if forloop.counter == 1 %} offset-lg-1 {% endif %} col-md-3 col-sm-6">
+                    <div class="footer__widget">
+                        <h6>{{widget.heading}}</h6>
+                        <ul>
+                            {% for link in widget.links.all %}
+                            <li><a href="{{link.url}}">{{link.name}}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                {% endfor %}
+                <div class="col-lg-3 offset-lg-1 col-md-6 col-sm-6">
+                    <div class="footer__widget">
+                        <h6>{{footer.news_letter.heading}}</h6>
+                        <div class="footer__newslatter">
+                            <p>{{footer.news_letter.text}}</p>
+                            <form action="#">
+                                <input type="text" placeholder="Your email">
+                                <button type="submit"><span class="icon_mail_alt"></span></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="footer__copyright__text">
+                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                        <p>
+                            <!-- <script>
+                                document.write(new Date().getFullYear());
+                            </script> -->
+                            {% autoescape off %}
+                            {{ footer.footer_text|safe }}
+                            {% endautoescape %}
+                        </p>
+                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>

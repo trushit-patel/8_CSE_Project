@@ -1,0 +1,220 @@
+{% extends 'admin/base_admin.html' %}
+{% load static %}
+{% block title %} Admin Dashboard {% endblock %}
+
+{% block style %}
+    <style type="text/css">
+        #popupbox {
+            position: relative;
+            z-index: 9;
+            display: none;
+        }
+        select {
+            width: 186px;
+            height: 30px;
+        }
+        #id_shortdes{
+            width: 100%;
+        }
+        #image-clear_id{
+            width: auto;
+            margin-left: 90px;
+        }
+        .alert {
+            padding: 20px;
+            background-color: #F3F2EE;
+            color: rgb(0, 0, 0);
+        }
+    
+        .closebtn {
+            margin-left: 15px;
+            color: black;
+            font-weight: bold;
+            float: right;
+            font-size: 22px;
+            line-height: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+    
+        .closebtn:hover {
+            color: black;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Dashboard</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active">Dashboard v1</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="form w-75 mx-auto" id="popupbox">
+    {% for field in form %}
+        {% for error in field.errors %}
+            <div class="alert" style="background-color: red; color: #F3F2EE;">
+                <span class="closebtn" onclick="this.parentElement.style.visibility='hidden';">&times;</span>
+                {{field.name}}{{ error|escape }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+    <div class="card card-warning">
+        <div class="card-header">
+            <h3 class="card-title">Add Offer</h3>
+
+            <button type="button" class="close d-flex justify-row-reverse"
+                aria-label="Close">
+                <span aria-hidden="true"><a href="javascript:login('hide');">&times;</a></span>
+            </button>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body">
+            <form  action="?id={{id}}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>{{form.name.label}}</label>
+                                <br>{{form.name}}
+                            </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <!-- text input -->
+                            <div class="form-group">
+                                <label>{{form.product.label}}</label>
+                                <br>{{form.product}}
+                            </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>{{form.expiration.label}}</label>
+                                <br>{{form.expiration}}
+                            </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>{{form.on_display.label}}</label>
+                            <br>{{form.on_display}}
+                        </div>
+                </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-sm">
+                            <div class="form-group">
+                                <label>{{form.text.label}}</label>
+                                <br>{{form.text}}
+                            </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <!-- textarea -->
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!-- /.card-body -->
+    </div>
+</div>
+<section class="content">
+    <div class="container-fluid">
+        <div class="card-header">
+            <h3 class="card-title">Offer Data</h3>
+
+            <div class="card-tools">
+                <div class="form-group d-inline-flex m-auto">
+                    <button type="button" class="btn btn-sm btn-primary"
+                        onclick="javascript:login('show');">Add Offer</button>
+                </div>
+                <div class="input-group input-group-sm d-inline-flex"
+                    style="width: 150px;">
+                    <input type="text" name="table_search"
+                        class="form-control float-right" placeholder="Search">
+
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-default">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-body p-0">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th style="width: 10px">#</th>
+                        <th>Name</th>
+                        <th style="width: 120px;" >Product</th>
+                        <th style="width: 150px;" >Text</th>
+                        <th>Created At</th>
+                        <th>Expiration</th>
+                        <th>On Display</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                    {% for object in objects %}
+                        <tr data-widget="expandable-table" aria-expanded="false">
+                            <td>{{forloop.counter}}</td>
+                            <td>{{object.name}}</td>
+                            <td>{{object.product.id }} | {{object.product.name }}</td>
+                            <td>{{object.text | safe}}</td>
+                            <td>{{object.created_at}}</td>
+                            <td>{{object.expiration}}</td>
+                            <td><span class="{% if object.on_display %}
+                                fa fa-check text-success 
+                                {% else %} 
+                                ion-close text-danger 
+                                {% endif %}">
+                            </span></td>
+                            <td><a href="?id={{object.id}}&&func=edit" class="btn btn-sm btn-warning"><i class="fa fa-edit" ></i></a>&nbsp;<a href="?id={{object.id}}&&func=delete" class="btn btn-sm btn-danger"><i class="fa fa-trash" ></i></a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script language="JavaScript" type="text/javascript">
+        function login(showhide) {
+            if (showhide == "show") {
+                document.getElementById('popupbox').style.display = "block";
+            } else if (showhide == "hide") {
+                document.getElementById('popupbox').style.display = "none";
+            }
+        }
+    </script>
+</section>
+{% endblock %}
+
+{% block javascript %}
+<script>
+    $('document').ready(function() {
+        CKEDITOR.replace('id_text', {
+            enterMode : CKEDITOR.ENTER_BR,
+            shiftEnterMode : CKEDITOR.ENTER_BR,
+            autoParagraph : false
+        });
+
+        $('#id_expiration').datepicker();
+    });
+</script>
+{% endblock %}

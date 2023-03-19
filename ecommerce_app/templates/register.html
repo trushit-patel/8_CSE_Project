@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Male-Fashion {% endblock %}
+
+{% block content %}
+
+<!-- Map Begin -->
+<!-- Map End -->
+<link href="{%  static 'css/custom.css' %}" type="text/css">
+<style>
+    .alert {
+        padding: 20px;
+        background-color: #F3F2EE;
+        color: rgb(0, 0, 0);
+    }
+
+    .closebtn {
+        margin-left: 15px;
+        color: black;
+        font-weight: bold;
+        float: right;
+        font-size: 22px;
+        line-height: 20px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .closebtn:hover {
+        color: black;
+    }
+</style>
+<!-- Contact Section Begin -->
+<section class="contact spad">
+
+    <div class="container w-50">
+
+        {% for message in messages %}
+        <div class="alert">
+            <span class="closebtn" onclick="this.parentElement.style.visibility='hidden';">&times;</span>
+            {{message}}&nbsp;<span><a href="/login">Login?</a></span>
+        </div>
+        {% endfor %}
+
+        {% for field in userForm %}
+            {% for error in field.errors %}
+                <div class="alert" style="background-color: red; color: #F3F2EE;">
+                    <span class="closebtn" onclick="this.parentElement.style.visibility='hidden';">&times;</span>
+                    {{ error|escape }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+
+        <div class="contact__form">
+            <form action="" method="POST">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-lg-6">
+                        {{userForm.username.label}}
+                        {{userForm.username}}
+                    </div>
+                    <div class="col-lg-6">
+                        {{userForm.email.label}}
+                        {{userForm.email}}
+                    </div>
+                    <div class="col-lg-6">
+                        {{userForm.password1.label}}
+                        {{userForm.password1}}
+                    </div>
+                    <div class="col-lg-6">
+                        {{userForm.password2.label}}
+                        {{userForm.password2}}
+                    </div>
+                    <div class="col-lg-12">
+                        <!-- <textarea placeholder="Address"></textarea> -->
+                        <button type="submit" class="site-btn">Register</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+
+    </div>
+</section>
+<!-- Contact Section End -->
+
+{% endblock %}
