@@ -9,7 +9,8 @@
                         </div>
                         <p>{{footer.moto}}</p>
                         {% for payment_partner in footer.payment_partners.all %}
-                        <a href="{{payment_partner.url}}"><img src="/media/{{payment_partner.partner}}" alt=""></a>
+                        <!--<a href="{{payment_partner.url}}"><img src="/media/{{payment_partner.partner}}" alt=""></a>-->
+                        <a href="#"><img src="/media/{{payment_partner.partner}}" alt=""></a>
                         {% endfor %}
                         <!-- the payment partners option -->
                     </div>

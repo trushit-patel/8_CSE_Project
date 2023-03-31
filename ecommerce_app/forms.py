@@ -4,6 +4,10 @@ from django.contrib.auth.models import User
 from django import forms
 from .models import *
 
+class Filter(forms.Form):
+    categories = forms.ModelMultipleChoiceField(queryset=Category.objects.all(), widget=forms.CheckboxSelectMultiple)
+    min_price = forms.DecimalField(max_digits=10, decimal_places=2)
+    max_price = forms.DecimalField(max_digits=10, decimal_places=2)
 
 class CartForm(forms.Form):
     quantity = forms.IntegerField(initial='1')

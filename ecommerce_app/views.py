@@ -25,11 +25,11 @@ def logoutPage(request):
 
 @unauthenticated
 def loginPage(request):
-    
+
     if request.method =="POST":
         username = request.POST.get('username')
         password = request.POST.get('password')
-       
+
         user = authenticate(request, username = username, password = password)
 
         if user is not None:
@@ -43,7 +43,7 @@ def loginPage(request):
 
 @unauthenticated
 def register(request):
-    
+
     userForm = UserRegisterForm()
 
     if request.method == 'POST':
@@ -58,7 +58,26 @@ def register(request):
 
 def shop(request):
     all_products = Product.objects.all()
-    return render(request,"shop.html",{'all_products': all_products,})
+    all_category = Category.objects.all()
+    filter_product = Filter()
+
+    if request.method == "POST":
+        filter_product = Filter(request.POST)
+        category_ids = request.POST.getlist('categories')
+        min_price = request.POST.get('min_price')
+        max_price = request.POST.get('max_price')
+
+        filter_product.max_price = max_price
+        filter_product.min_price = min_price
+        products = Product.objects.filter(category__id__in=category_ids, price__gte=min_price, price__lte=max_price)
+        return render(request,"shop.html",{'all_products': products,'all_category':all_category, 'filter':filter_product})
+
+    id = request.GET.get('id')
+    if id:
+        products = Product.objects.filter(category__id=id)
+        return render(request,"shop.html",{'all_products': products,'all_category':all_category, 'filter':filter_product})
+
+    return render(request,"shop.html",{'all_products': all_products,'all_category':all_category, 'filter':filter_product})
 
 def show_product(request, product_id, product_slug):
     product = get_object_or_404(Product, id=product_id)
@@ -106,13 +125,13 @@ def checkout(request):
     cart_items = cart.get_all_cart_items(request)
     cart_subtotal = cart.subtotal(request)
     checkout = CheckOutDetails.objects.filter(user=request.user).first()
-    
+
     if request.method == 'POST':
         form = CheckOutForm(request.POST)
         paymentForm = PayMentForm(request.POST)
 
         if form.is_valid() and paymentForm.is_valid():
-            
+
             if checkout:
                 checkout.__dict__.update(form.cleaned_data)
             else:
@@ -124,7 +143,7 @@ def checkout(request):
 
             o = Order(payment_method = cleaned_data.get('payment_method'), user = request.user, payment_status = payment_status)
             o.save()
-            
+
             for cart_item in cart_items:
                 li = LineItem(product_id = cart_item.product_id, price = cart_item.price, quantity = cart_item.quantity,order_id = o.id)
                 li.save()
@@ -133,12 +152,12 @@ def checkout(request):
             request.session['order_id'] = o.id
 
             messages.add_message(request, messages.INFO, 'Order Placed!')
-            
+
         return redirect('show_cart')
 
     form = CheckOutForm(instance=checkout)
     paymentForm = PayMentForm()
-    return render(request, 'checkout.html', {'form': form, 'payment_form':paymentForm , 'cart_items': cart_items, 
+    return render(request, 'checkout.html', {'form': form, 'payment_form':paymentForm , 'cart_items': cart_items,
                                              'cart_subtotal': cart_subtotal})
 
 @login_required(login_url="/login")
@@ -179,15 +198,19 @@ def serviceTerms(request):
     return render(request,'terms-of-service.html', context)
 
 def blog(request):
-    return render(request,'blog.html')
+    blogs = Blog.objects.all()
+    context = {'blogs': blogs}
+    return render(request,'blog.html',context)
 
 def contact(request):
     contact = Contact.objects.all().first()
     context = {'contact': contact}
     return render(request,'contact.html', context)
 
-def blog_details(request):
-    return render(request,'blog-details.html')
+def blog_details(request,blog_id):
+    blog = get_object_or_404(Blog, id=blog_id)
+    context = {'blog': blog}
+    return render(request,'blog-details.html',context)
 
 def accessdenied(request):
     return render(request, '403.html')

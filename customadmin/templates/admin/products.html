@@ -25,7 +25,7 @@
             background-color: #F3F2EE;
             color: rgb(0, 0, 0);
         }
-    
+
         .closebtn {
             margin-left: 15px;
             color: black;
@@ -36,7 +36,7 @@
             cursor: pointer;
             transition: 0.3s;
         }
-    
+
         .closebtn:hover {
             color: black;
         }
@@ -49,12 +49,12 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0">Dashboard</h1>
+                <h1 class="m-0">Product Management</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active">Dashboard v1</li>
+                    <li class="breadcrumb-item active">Products</li>
                 </ol>
             </div>
         </div>
@@ -111,7 +111,7 @@
                             <div class="form-group">
                                 <label>{{productForm.discount.label}}</label>
                                 <br>{{productForm.discount}}
-                            </div>    
+                            </div>
                     </div>
                 </div>
                 <div class="row">
@@ -132,14 +132,14 @@
                 </div>
                 <!-- input states -->
                 <div class="row">
-                    <div class="col-sm-6">     
+                    <div class="col-sm-6">
                             <div class="form-group">
                                 <label>{{productForm.category.label}}</label>
                                 <br>{{productForm.category}}
                             </div>
                     </div>
 
-                    <div class="col-sm-6">     
+                    <div class="col-sm-6">
                         <div class="form-group">
                             <label>{{productForm.slug.label}}</label>
                             <br>{{productForm.slug}}
@@ -208,13 +208,14 @@
                         <th>Product</th>
                         <th>Price</th>
                         <th>Quantity</th>
-                        <th>Date</th>
-                        <th>User</th>
+                        <th>Sale Price</th>
+                        <th>Stock</th>
+                        <th>Image</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    
+
                     {% for product in products %}
                         <tr data-widget="expandable-table" aria-expanded="false">
                             <td>{{forloop.counter}}</td>
@@ -225,8 +226,8 @@
                             <td>{{product.stock}}</td>
                             <td><img width="50px" height="50px" src="/media/{{product.image}}" ></td>
                             <td>{{product.category.name}}</td>
-                            <td style="width: 250px;">{{product.description}}</td>
-                            <td>{{product.shortdes}}</td>
+                            <!--<td style="width: 250px;">{{product.description}}</td>-->
+                            <!--<td>{{product.shortdes}}</td>-->
                             <td><a href="?id={{product.id}}&&func=edit" class="btn btn-sm btn-warning"><i class="fa fa-edit" ></i></a>
                                 <a href="?id={{product.id}}&&func=delete" class="btn btn-sm btn-danger"><i class="fa fa-trash" ></i></a></td>
                         </tr>
@@ -257,6 +258,6 @@
             autoParagraph : false
         });
     });
-    
+
     </script>
 {% endblock %}

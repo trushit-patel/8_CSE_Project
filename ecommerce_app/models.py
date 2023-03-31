@@ -3,6 +3,16 @@ from django.contrib.auth.models import User
 from django_countries.fields import CountryField
 from django.utils import timezone
 
+class Blog(models.Model):
+    title = models.CharField(max_length=191)
+    postedBy = models.CharField(max_length=191)
+    postedOn = models.DateTimeField(auto_now_add=True)
+    image = models.ImageField(upload_to='blog_images/', blank=True)
+    text = models.TextField()
+
+    def __str__(self):
+        return self.title
+
 class Category(models.Model):
     name = models.CharField(max_length=191)
     description = models.TextField()
@@ -14,7 +24,7 @@ class Product(models.Model):
     name = models.CharField(max_length=191)
     price = models.DecimalField(max_digits=7, decimal_places=2)
     slug = models.SlugField()
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True, blank=True)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True, blank=True, related_name= 'products')
     description = models.TextField()
     shortdes = models.CharField(max_length=191)
     discount = models.IntegerField(default=0)
@@ -73,7 +83,7 @@ class Order(models.Model):
         UPI = 'up', 'UPI'
 
     payment_method = models.CharField(max_length=2, choices=PaymentMethod.choices)
-    
+
     def set_user(self, user):
         self.user = user
 
@@ -100,11 +110,11 @@ class LineItem(models.Model):
 
 class Logo(models.Model):
     logo = models.ImageField(upload_to='logo/', blank=True)
-    logo_url = models.URLField()
+    logo_url = models.CharField(max_length=255)
 
 class Link(models.Model):
     name = models.CharField(max_length=255)
-    url = models.URLField()
+    url = models.CharField(max_length=255)
 
     def __str__(self):
         return self.name + ":" + self.url
@@ -130,7 +140,7 @@ class Footer(models.Model):
     footer_text = models.TextField( default="Copyright © 2023 All rights reserved | This template is made with <3 by Colorlib")
 
 class PaymentPartners(models.Model):
-    url = models.URLField(null=True, blank= True)
+    url = models.CharField(max_length=255)
     partner = models.ImageField(upload_to='payment_partners/', blank=True, null=True)
 
 class Policy(models.Model):
@@ -166,7 +176,7 @@ class Offer(models.Model):
 
     def is_active(self):
         return timezone.now() < self.expiration
-    
+
     def time_remaining(self):
         return (self.expiration - timezone.now()).total_seconds() * 1000
 

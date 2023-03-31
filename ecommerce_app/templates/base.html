@@ -10,6 +10,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{% block title %} {% endblock %}</title>
 
+    <link rel="icon" type="image/x-icon" href="{%  static 'img/icon-logo.png' %}">
+
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap"
         rel="stylesheet">
@@ -23,6 +25,8 @@
     <link rel="stylesheet" href="{%  static 'css/owl.carousel.min.css' %}" type="text/css">
     <link rel="stylesheet" href="{%  static 'css/slicknav.min.css' %}" type="text/css">
     <link rel="stylesheet" href="{%  static 'css/style.css' %}" type="text/css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
+    {% block style %} {% endblock %}
 </head>
 
 <body>
@@ -41,7 +45,7 @@
 
     {% endblock %}
     <!-- Latest Blog Section End -->
-    
+
     <!-- Footer Section Begin -->
     {% include 'footer.html' %}
     <!-- Footer Section End -->
@@ -59,6 +63,7 @@
 
     <!-- Js Plugins -->
     <script src="{% static 'js/jquery-3.3.1.min.js' %} "></script>
+    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
     <script src="{% static 'js/bootstrap.min.js' %} "></script>
     <script src="{% static 'js/jquery.nice-select.min.js' %} "></script>
     <script src="{% static 'js/jquery.nicescroll.min.js' %} "></script>
@@ -70,11 +75,9 @@
     <script src="{% static 'js/main.js' %} "></script>
     <script>
         $('document').ready(function(){
-            var current = 'http://localhost:8000' + location.pathname;
-            console.log(current);
+            var current = location.pathname;
             $('#nav ul li').each(function(){
                 var $this = $(this).find('a');
-                console.log($this.attr('href'));
                 // if the current path is like this link, make it active
                 if($this.attr('href') === current ){
                     $(this).addClass('active');

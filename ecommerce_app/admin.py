@@ -62,6 +62,9 @@ class PageSectionAdmin(admin.ModelAdmin):
 class AboutAdmin(admin.ModelAdmin):
     list_display = [field.name for field in About._meta.fields]
 
+class BlogAdmin(admin.ModelAdmin):
+    list_display = [field.name for field in Blog._meta.fields if field.name != 'text']
+
 
 admin.site.register(Product, ProductAdmin)
 admin.site.register(CheckOutDetails, CheckOutDetailsAdmin)
@@ -82,3 +85,4 @@ admin.site.register(Offer, OfferAdmin)
 admin.site.register(Contact, ContactAdmin)
 admin.site.register(PageSection, PageSectionAdmin)
 admin.site.register(About, AboutAdmin)
+admin.site.register(Blog, BlogAdmin)

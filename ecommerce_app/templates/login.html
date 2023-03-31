@@ -13,7 +13,7 @@
         background-color: #F3F2EE;
         color: rgb(0, 0, 0);
     }
-    
+
     .closebtn {
         margin-left: 15px;
         color: black;
@@ -24,7 +24,7 @@
         cursor: pointer;
         transition: 0.3s;
     }
-    
+
     .closebtn:hover {
         color: black;
     }
@@ -38,23 +38,24 @@
             {{message}}&nbsp;<span><a href="/login" >Login?</a></span>
         </div>
         {% endfor %}
-        
-        <div class="contact__form w-50 mx-auto">
+
+        <div class="contact__form mx-auto">
             <form action="" method="post">
                 {% csrf_token %}
 
-                <label for="username" >Username</label>
-                <input type="text" id="username" placeholder="Username" name="username">
-
-                <label for="password" >Password</label>
-                <input type="text" id="password" placeholder="Password" name="password">
+                <div class="col-sm" >
+                <label for="username" >Username</label><br>
+                <input type="text" id="username" style="max-width: 292px;" placeholder="Username" name="username">
+                <br>
+                <label for="password" >Password</label><br>
+                <input type="password" id="password" style="max-width: 292px;" placeholder="Password" name="password">
 
 
                 <div class="mx-auto">New here?&nbsp;<a href="/register">Register now</a></div><br>
 
 
                 <button type="submit" class="site-btn h-10">Login</button>
-
+                </div>
 
             </form>
         </div>

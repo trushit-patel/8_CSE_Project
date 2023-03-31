@@ -40,7 +40,14 @@ def login_page(request):
 
 @admin_only
 def dashboard(request):
-    return render(request, 'admin/dashboard.html')
+    users = User.objects.count()
+    orders_count = Order.objects.count()
+    orders_with_payment = Order.objects.filter(payment_status = True).count()
+    bounce_rate = int(orders_with_payment/orders_count * 100)
+    orders = [ int(order.total_cost()) for order in Order.objects.all()]
+    print(orders)
+    context = {'orders':orders, 'users':users, 'orders_count':orders_count, 'bounce_rate':bounce_rate}
+    return render(request, 'admin/dashboard.html', context)
 
 @admin_only
 def products(request):

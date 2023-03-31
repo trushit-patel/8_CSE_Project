@@ -2,6 +2,31 @@
 {% load static %}
 {% block title %} Male-Fashion {% endblock %}
 
+{% block style %}
+
+<style>
+    /* Chrome, Safari, Edge, Opera */
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    /* Firefox */
+    input[type=number] {
+      -moz-appearance: textfield;
+    }
+
+    #id_min_price, #id_max_price{
+        width: 50px;
+    }
+    #price_div{
+        margin: 5px;
+    }
+</style>
+
+{% endblock %}
+
 {% block content %}
 <!-- Header Section End -->
 
@@ -13,7 +38,7 @@
                 <div class="breadcrumb__text">
                     <h4>Shop</h4>
                     <div class="breadcrumb__links">
-                        <a href="./index.html">Home</a>
+                        <a href="/">Home</a>
                         <span>Shop</span>
                     </div>
                 </div>
@@ -54,7 +79,7 @@
 
                     <div class="col-lg-4 col-md-6 col-sm-6">
                         <div class="product__item">
-                            
+
                                 <div class="product__item__pic set-bg"
                                     data-setbg=/media/{{product.image}}>
                                     <ul class="product__hover">
@@ -63,10 +88,10 @@
                                                 <span>Compare</span></a>
                                         </li>
                                         <li><a href="{% url 'product_detail' product.pk product.slug %}"><img src="{% static 'img/icon/search.png' %}" alt=""></a></li>
-                                        
+
                                     </ul>
                                 </div>
-                           
+
                             <div class="product__item__text">
                                 <h6>{{ product.name }}</h6>
                                 <a href="#" class="add-cart">+ Add To Cart</a>
@@ -112,4 +137,36 @@
 </section>
 <!-- Shop Section End -->
 
+{% endblock %}
+
+{% block javascript %}
+<script>
+
+    $(document).ready(function() {
+      $('#filter input').change(function() {
+        $('#filter').submit();
+      });
+    });
+
+    $(function() {
+      var sliderRange = $("#slider-range");
+      var priceMin = $("#id_min_price");
+      var priceMax = $("#id_max_price");
+
+      sliderRange.slider({
+        range: true,
+        min: 0,
+        max: 1000,
+        values: [0, 1000],
+        slide: function(event, ui) {
+          priceMin.val(ui.values[0]);
+          priceMax.val(ui.values[1]);
+        }
+      });
+
+      // Set initial values
+      priceMin.val(sliderRange.slider("values", 0));
+      priceMax.val(sliderRange.slider("values", 1));
+    });
+</script>
 {% endblock %}
