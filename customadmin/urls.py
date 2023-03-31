@@ -8,6 +8,7 @@ urlpatterns = [
     path('/', dashboard, name='dashboard'),
     path('/403', accessdenied, name='403'),
     path('/Banner', banner, name='Banner'),
+    path('/Blog', blog, name='Blog'),
     path('/signin', login_page, name='signin'),
     path('/dashboard', dashboard, name='dashboard'),
     path('/Product', products, name='Product'),

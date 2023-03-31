@@ -14,7 +14,10 @@ def index(request):
     #my_queryset = MyModel.objects.all().order_by('name')
     context = {'banners': Banner.objects.all(),
                'offer': active_offer[0] if active_offer else None,
-               'expiration' : expiration
+               'expiration' : expiration,
+               'blogs': Blog.objects.all()[:3],
+               'new_arrivals': Product.objects.all().order_by('id')[:4],
+               'hot_sales': Product.objects.filter(feature_product = True),
                }
     return render(request, "index.html", context)
 

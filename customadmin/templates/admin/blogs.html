@@ -9,12 +9,9 @@
             z-index: 9;
             display: none;
         }
-        select {
-            width: 186px;
-            height: 30px;
-        }
-        #id_shortdes{
+        input {
             width: 100%;
+            height: 30px;
         }
         #image-clear_id{
             width: auto;
@@ -49,19 +46,19 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0">Product Management</h1>
+                <h1 class="m-0">Blog Management</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active">Products</li>
+                    <li class="breadcrumb-item active">Blogs</li>
                 </ol>
             </div>
         </div>
     </div>
 </div>
 <div class="form w-75 mx-auto" id="popupbox">
-    {% for field in productForm %}
+    {% for field in form %}
         {% for error in field.errors %}
             <div class="alert" style="background-color: red; color: #F3F2EE;">
                 <span class="closebtn" onclick="this.parentElement.style.visibility='hidden';">&times;</span>
@@ -71,7 +68,7 @@
     {% endfor %}
     <div class="card card-warning">
         <div class="card-header">
-            <h3 class="card-title">Add Products</h3>
+            <h3 class="card-title">Add Blogs</h3>
 
             <button type="button" class="close d-flex justify-row-reverse"
                 aria-label="Close">
@@ -83,18 +80,10 @@
             <form  action="?id={{id}}" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="row">
-                    <div class="col-sm-6">
+                    <div class="col-sm">
                             <div class="form-group">
-                                <label>{{productForm.name.label}}</label>
-                                <br>{{productForm.name}}
-                                <br>{{productForm.id.label}}
-                            </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <!-- text input -->
-                            <div class="form-group">
-                                <label>{{productForm.price.label}}</label>
-                                <br>{{productForm.price}}
+                                <label>{{from.title.label}}Title</label>
+                                <br>{{form.title}}
                             </div>
                     </div>
                 </div>
@@ -102,72 +91,25 @@
                     <div class="col-sm-6">
                         <!-- text input -->
                             <div class="form-group">
-                                <label>{{productForm.sale_price.label}}</label>
-                                <br>{{productForm.sale_price}}
-                            </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <!-- text input -->
-                            <div class="form-group">
-                                <label>{{productForm.discount.label}}</label>
-                                <br>{{productForm.discount}}
-                            </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-6">
-                        <!-- text input -->
-                            <div class="form-group">
-                                <label>{{productForm.stock.label}}</label>
-                                <br>{{productForm.stock}}
+                                <label>{{form.postedBy.label}}</label>
+                                <br>{{form.postedBy}}
                             </div>
                     </div>
                     <div class="col-sm-6">
                         <!-- text input -->
                         <div class="form-group">
-                            <label>{{productForm.image.label}}</label>
-                            <br>{{productForm.image}}
+                            <label>{{form.image.label}}</label>
+                            <br>{{form.image}}
                         </div>
                     </div>
                 </div>
-                <!-- input states -->
-                <div class="row">
-                    <div class="col-sm-6">
-                            <div class="form-group">
-                                <label>{{productForm.category.label}}</label>
-                                <br>{{productForm.category}}
-                            </div>
-                    </div>
 
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                            <label>{{productForm.slug.label}}</label>
-                            <br>{{productForm.slug}}
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-8">
-                        <!-- text input -->
-                            <div class="form-group">
-                                <label>{{productForm.shortdes.label}}</label>
-                                <br>{{productForm.shortdes}}
-                            </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <!-- text input -->
-                            <div class="form-group">
-                                <label>{{productForm.feature_product.label}}</label>
-                                <br>{{productForm.feature_product}}
-                            </div>
-                    </div>
-                </div>
                 <div class="row">
                     <div class="col-sm-12">
                         <!-- textarea -->
                             <div class="form-group">
-                                <label>{{productForm.description.label}}</label>
-                                <br>{{productForm.description}}
+                                <label>{{form.text.label}}</label>
+                                <br>{{form.text}}
                             </div>
                     </div>
                 </div>
@@ -187,12 +129,12 @@
 <section class="content">
     <div class="container-fluid">
         <div class="card-header">
-            <h3 class="card-title">Product Data</h3>
+            <h3 class="card-title">Blog Data</h3>
 
             <div class="card-tools">
                 <div class="form-group d-inline-flex m-auto">
                     <button type="button" class="btn btn-sm btn-primary"
-                        onclick="javascript:login('show');">Add Products</button>
+                        onclick="javascript:login('show');">Add Blogs</button>
                 </div>
                 <div class="input-group input-group-sm d-inline-flex"
                     style="width: 150px;">
@@ -212,34 +154,22 @@
                 <thead>
                     <tr>
                         <th style="width: 10px">#</th>
-                        <th>Product</th>
-                        <th>Price</th>
-                        <th>Quantity</th>
-                        <th>Sale Price</th>
-                        <th>Stock</th>
-                        <th>Image</th>
-                        <th>Category</th>
-                        <th>Featured</th>
+                        <th>Title</th>
+                        <th>Posted By</th>
+                        <th>Posted On</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
 
-                    {% for product in products %}
+                    {% for object in objects %}
                         <tr data-widget="expandable-table" aria-expanded="false">
                             <td>{{forloop.counter}}</td>
-                            <td>{{product.name}}</td>
-                            <td>{{product.price}}</td>
-                            <td>{{product.discount}}</td>
-                            <td>{{product.sale_price}}</td>
-                            <td>{{product.stock}}</td>
-                            <td><img width="50px" height="50px" src="/media/{{product.image}}" ></td>
-                            <td>{{product.category.name}}</td>\
-                            <td>{{product.feature_product}}</td>
-                            <!--<td style="width: 250px;">{{product.description}}</td>-->
-                            <!--<td>{{product.shortdes}}</td>-->
-                            <td><a href="?id={{product.id}}&&func=edit" class="btn btn-sm btn-warning"><i class="fa fa-edit" ></i></a>
-                                <a href="?id={{product.id}}&&func=delete" class="btn btn-sm btn-danger"><i class="fa fa-trash" ></i></a></td>
+                            <td>{{object.title}}</td>
+                            <td>{{object.postedOn}}</td>
+                            <td>{{object.postedBy}}</td>
+                            <td><a href="?id={{object.id}}&&func=edit" class="btn btn-sm btn-warning"><i class="fa fa-edit" ></i></a>
+                                <a href="?id={{object.id}}&&func=delete" class="btn btn-sm btn-danger"><i class="fa fa-trash" ></i></a></td>
                         </tr>
                     {% endfor %}
                 </tbody>
@@ -262,7 +192,7 @@
 <script>
 
     $('document').ready(function() {
-        CKEDITOR.replace('id_description', {
+        CKEDITOR.replace('id_text', {
             enterMode : CKEDITOR.ENTER_BR,
             shiftEnterMode : CKEDITOR.ENTER_BR,
             autoParagraph : false

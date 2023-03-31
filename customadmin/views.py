@@ -50,6 +50,41 @@ def dashboard(request):
     return render(request, 'admin/dashboard.html', context)
 
 @admin_only
+def blog(request):
+    objects = Blog.objects.all()
+    form = get_form_class(model=Blog)
+    id = None
+    object = None
+
+    if request.GET.get('func') == 'edit':
+        id = request.GET.get('id')
+        object = Blog.objects.get(id = id)
+        form = form(instance=object)
+
+    elif request.GET.get('func') == 'delete':
+        object = Blog.objects.get(id = request.GET.get('id'))
+        object.delete()
+        return redirect('Blog')
+
+    if request.method == 'POST':
+        if request.GET.get('id') != 'None':
+            object = Blog.objects.get(id = request.GET.get('id'))
+            form = form(request.POST, instance= object)
+        else:
+            form = form(request.POST)
+        if form.is_valid():
+            print('valid')
+            object =  form.save(commit=False)
+            object.image = request.FILES.get('image')
+            object.save()
+            return redirect('Blog')
+        else:
+            print(form.errors)
+
+    context = {'objects': objects, 'form':form ,'id':id}
+    return render(request, 'admin/blogs.html', context)
+
+@admin_only
 def products(request):
     products = Product.objects.all()
     productForm = ProductForm()
